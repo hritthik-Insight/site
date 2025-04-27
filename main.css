@@ -8,12 +8,12 @@
    ===================================================================== */
 
 :root {
-    --bg-color: #ffffff;
+    --bg-color: #f1f1f1;
     --text-color: #272727;
     --link-color: #ff0f00;
     --border-color: rgba(0, 0, 0, 0.1);
     --border-bottom-color: rgba(255, 255, 255, 0.3);
-    --navbar-bg: rgba(255, 255, 255, 0.8);
+    --navbar-bg: #f1f1f1cc;
     --table-bg: white;
     --blockquote-border: #333333;
     --transition-speed: 0.3s ease;
@@ -24,12 +24,12 @@
 }
 
 [data-theme="dark"] {
-    --bg-color: #121212;
+    --bg-color: #161616;
     --text-color: #e0e0e0;
     --link-color: #ff6b6b;
     --border-color: rgba(255, 255, 255, 0.1);
     --border-bottom-color: rgba(0, 0, 0, 0.3);
-    --navbar-bg: rgba(18, 18, 18, 0.8);
+    --navbar-bg: #1616164d;
     --table-bg: #1e1e1e;
     --blockquote-border: #666666;
 }
@@ -72,7 +72,8 @@ hr {
 }
 
 h2 {
-    margin-top: var(--spacing-xl);
+    margin-block-start: var(--spacing-lg);
+    margin-block-end: var(--spacing-md);
     color: var(--text-color);
 }
 
@@ -111,7 +112,6 @@ h4 {
     width: 100%;
     z-index: 1000;
     background-color: var(--navbar-bg);
-    border-bottom: 1px solid var(--border-bottom-color);
     transition: background-color var(--transition-speed);
     backdrop-filter: blur(5px);
 }
@@ -183,7 +183,7 @@ h4 {
     height: 30px;
     border-radius: 50%;
     background-color: var(--bg-color);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2); */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,7 +191,7 @@ h4 {
     z-index: 2000;
     transition: transform var(--transition-speed),
         box-shadow var(--transition-speed);
-    border: 1px solid var(--border-color);
+
     right: 10px;
     top: 50%;
     transform: translateY(-50%);

@@ -3,11 +3,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const themeBulb = document.getElementById("theme-toggle-bulb");
     const lightIcon = themeBulb.querySelector(".light-icon");
     const darkIcon = themeBulb.querySelector(".dark-icon");
-    
+
     // Check for saved theme preference or respect OS preference
     const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
     const savedTheme = localStorage.getItem("theme");
-    
+
     if (savedTheme === "dark" || (!savedTheme && prefersDarkScheme.matches)) {
         document.documentElement.setAttribute("data-theme", "dark");
         lightIcon.style.display = "none";
@@ -17,12 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
         lightIcon.style.display = "block";
         darkIcon.style.display = "none";
     }
-    
+
     // Toggle theme when bulb is clicked
-    themeBulb.addEventListener("click", function() {
-        const currentTheme = document.documentElement.getAttribute("data-theme");
+    themeBulb.addEventListener("click", function () {
+        const currentTheme =
+            document.documentElement.getAttribute("data-theme");
         let newTheme;
-        
+
         if (currentTheme === "light") {
             newTheme = "dark";
             lightIcon.style.display = "none";
@@ -42,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 themeBulb.style.transform = "translateY(-50%) scale(1)";
             }, 300);
         }
-        
+
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
     });
@@ -50,6 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
+    // Resume PDF generation functionality - COMMENTED OUT
+    /*
     resumeButton.addEventListener("click", function () {
         console.log("Resume button clicked!");
         // Show loading indicator (optional)
@@ -75,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             });
     });
+    */
 
     const navbar = document.querySelector(".navbar");
     const offset = navbar.offsetHeight; // You can adjust this value as needed
@@ -98,8 +102,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.onload = adjustWrapperMargin;
     window.onresize = adjustWrapperMargin;
-    
-    // Handle contact form submission
+
+    // Handle contact form submission - COMMENTED OUT
+    /*
     const contactForm = document.getElementById('contactForm');
     if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
@@ -136,10 +141,11 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+    */
 });
 
 // Add CSS for success message
-const style = document.createElement('style');
+const style = document.createElement("style");
 style.textContent = `
     .success-message {
         background-color: var(--bg-color);
