@@ -1,4 +1,53 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Theme toggle functionality
+    const themeBulb = document.getElementById("theme-toggle-bulb");
+    const lightIcon = themeBulb.querySelector(".light-icon");
+    const darkIcon = themeBulb.querySelector(".dark-icon");
+    
+    // Check for saved theme preference or respect OS preference
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    const savedTheme = localStorage.getItem("theme");
+    
+    if (savedTheme === "dark" || (!savedTheme && prefersDarkScheme.matches)) {
+        document.documentElement.setAttribute("data-theme", "dark");
+        lightIcon.style.display = "none";
+        darkIcon.style.display = "block";
+    } else {
+        document.documentElement.setAttribute("data-theme", "light");
+        lightIcon.style.display = "block";
+        darkIcon.style.display = "none";
+    }
+    
+    // Toggle theme when bulb is clicked
+    themeBulb.addEventListener("click", function() {
+        const currentTheme = document.documentElement.getAttribute("data-theme");
+        let newTheme;
+        
+        if (currentTheme === "light") {
+            newTheme = "dark";
+            lightIcon.style.display = "none";
+            darkIcon.style.display = "block";
+            // Add a small animation effect that preserves vertical centering
+            themeBulb.style.transform = "translateY(-50%) scale(1.2)";
+            setTimeout(() => {
+                themeBulb.style.transform = "translateY(-50%) scale(1)";
+            }, 300);
+        } else {
+            newTheme = "light";
+            lightIcon.style.display = "block";
+            darkIcon.style.display = "none";
+            // Add a small animation effect that preserves vertical centering
+            themeBulb.style.transform = "translateY(-50%) scale(1.2)";
+            setTimeout(() => {
+                themeBulb.style.transform = "translateY(-50%) scale(1)";
+            }, 300);
+        }
+        
+        document.documentElement.setAttribute("data-theme", newTheme);
+        localStorage.setItem("theme", newTheme);
+    });
+
+    // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
     resumeButton.addEventListener("click", function () {
@@ -8,7 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const element = document.body; // Or a specific element containing the resume
 
-        html2pdf(element)
+        window
+            .html2pdf(element)
             .then(function (pdf) {
                 // Hide loading indicator (optional)
                 // document.getElementById('loading').style.display = 'none';
@@ -48,4 +98,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
     window.onload = adjustWrapperMargin;
     window.onresize = adjustWrapperMargin;
+    
+    // Handle contact form submission
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real application, you would send this data to a server
+            console.log('Form submitted:', { name, email, subject, message });
+            
+            // Create success message
+            const formContainer = contactForm.parentElement;
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.innerHTML = `
+                <h3>Thank you for your message!</h3>
+                <p>Hi ${name}, I've received your message and will get back to you soon.</p>
+                <button id="newMessageBtn" class="submit-btn">Send another message</button>
+            `;
+            
+            // Hide form and show success message
+            contactForm.style.display = 'none';
+            formContainer.appendChild(successMessage);
+            
+            // Add event listener to "Send another message" button
+            document.getElementById('newMessageBtn').addEventListener('click', function() {
+                contactForm.reset();
+                successMessage.remove();
+                contactForm.style.display = 'flex';
+            });
+        });
+    }
 });
+
+// Add CSS for success message
+const style = document.createElement('style');
+style.textContent = `
+    .success-message {
+        background-color: var(--bg-color);
+        padding: 20px;
+        border-radius: 4px;
+        border: 1px solid var(--border-color);
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .success-message h3 {
+        color: var(--link-color);
+        margin-top: 0;
+    }
+`;
+document.head.appendChild(style);

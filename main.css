@@ -1,18 +1,62 @@
-html {
+/**
+ * main.css - Personal website styles
+ * Author: Hritthik Bose
+ */
+
+/* =====================================================================
+   1. CSS Variables
+   ===================================================================== */
+
+:root {
+    --bg-color: #ffffff;
+    --text-color: #272727;
+    --link-color: #ff0f00;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-bottom-color: rgba(255, 255, 255, 0.3);
+    --navbar-bg: rgba(255, 255, 255, 0.8);
+    --table-bg: white;
+    --blockquote-border: #333333;
+    --transition-speed: 0.3s ease;
+    --spacing-sm: 5px;
+    --spacing-md: 10px;
+    --spacing-lg: 15px;
+    --spacing-xl: 20px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #121212;
+    --text-color: #e0e0e0;
+    --link-color: #ff6b6b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-bottom-color: rgba(0, 0, 0, 0.3);
+    --navbar-bg: rgba(18, 18, 18, 0.8);
+    --table-bg: #1e1e1e;
+    --blockquote-border: #666666;
+}
+
+/* =====================================================================
+   2. Base Styles
+   ===================================================================== */
+
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
 }
 
 body {
-    margin: 0;
-    font-family: "Inconsolata";
-    height: 100%;
+    font-family: "Inconsolata", monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed),
+        color var(--transition-speed);
 }
 
 a {
     text-decoration: none;
-    color: #ff0f00;
+    color: var(--link-color);
+    transition: color var(--transition-speed);
 }
 
 a:hover {
@@ -22,97 +66,160 @@ a:hover {
 hr {
     border: 0;
     height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-bottom-color);
+    margin: var(--spacing-xl) 0;
 }
 
-#author-name {
-    font-size: 30px;
-    color: #272727;
-    display: inline-block;
+h2 {
+    margin-top: var(--spacing-xl);
+    color: var(--text-color);
 }
 
-.navbar {
-    padding: 15px 0;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: rgba(255, 255, 255, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    transition: padding 0.3s ease;
-    backdrop-filter: blur(5px);
+h3,
+h4 {
+    color: var(--text-color);
 }
 
-@media (max-width: 800px) {
-    .navbar {
-        width: 100%;
-    }
-}
-
-@media (max-width: 650px) {
-    .navbar {
-        width: 100%;
-    }
-}
-
-.navbar.scrolled {
-    padding: 15px 0;
-}
-
-.navbar .container {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.navbar-ul {
-    display: inline-block;
-    margin: 0;
-    padding: 5px 0 5px 0;
-    margin-left: 20px;
-}
-
-.nav-list {
-    list-style-type: none;
-    margin: 0 5px 0 10px;
-}
-
-.alignable,
-.pull-left,
-.pull-right {
-    display: inline-block;
-}
-
-.pull-left {
-    float: left;
-}
-
-.pull-right {
-    float: right;
-}
+/* =====================================================================
+   3. Layout Components
+   ===================================================================== */
 
 .container {
     max-width: 700px;
-    margin: auto;
+    margin: 0 auto;
 }
 
 .wrapper {
     min-height: 100%;
 }
 
-#ins-logo {
-    margin: auto;
-    display: block;
-    max-height: 100px;
-    text-align: center;
+.content {
+    padding: 0;
 }
+
+/* =====================================================================
+   4. Navigation & Header
+   ===================================================================== */
+
+.navbar {
+    padding: var(--spacing-lg) 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--navbar-bg);
+    border-bottom: 1px solid var(--border-bottom-color);
+    transition: background-color var(--transition-speed);
+    backdrop-filter: blur(5px);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-top: 0;
+}
+
+#author-name {
+    font-size: 30px;
+    color: var(--text-color);
+    display: inline-block;
+}
+
+.navbar-ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: var(--spacing-sm) 0;
+    padding-right: 50px; /* Make space for theme toggle button */
+    list-style-type: none;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+}
+
+/* Style for the slash separator with margins for spacing */
+.nav-separator {
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 0 var(--spacing-sm);
+    font-weight: 300;
+    display: inline-block;
+}
+
+/* Ensure consistent styling for nav links */
+.nav-list a {
+    padding: 5px 0;
+    transition: color 0.2s ease;
+}
+
+/* Add subtle hover effect */
+.nav-list a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* =====================================================================
+   5. Theme Toggle Component
+   ===================================================================== */
+
+.theme-toggle-bulb {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform var(--transition-speed),
+        box-shadow var(--transition-speed);
+    border: 1px solid var(--border-color);
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.theme-toggle-bulb:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bulb-icon {
+    color: var(--link-color);
+    width: 20px;
+    height: 20px;
+}
+
+.light-icon,
+.dark-icon {
+    display: block;
+}
+
+/* =====================================================================
+   6. Content Styles
+   ===================================================================== */
 
 .about-content {
     display: inline-flex;
     position: relative;
-    overflow: wrap;
 }
 
 .about-text {
@@ -121,88 +228,24 @@ hr {
     text-wrap: auto;
 }
 
-@media (max-width: 800px) {
-    .container {
-        max-width: 600px;
-        transition: 0.3s ease all;
-    }
-}
-
-@media (max-width: 650px) {
-    .container {
-        max-width: 83%;
-    }
-
-    .navbar-ul {
-        margin-top: 5px;
-    }
-}
-
-@media (max-width: 500px) {
-    .navbar {
-        text-align: center;
-        padding: 20px 0px 0px 0px;
-    }
-
-    /* .wrapper {
-        margin-top: calc(heightof(navbar));
-    } */
-
-    #author-name {
-        width: 100%;
-        float: none;
-    }
-
-    #navlist {
-        padding: 10px 0 10px 0;
-        margin: 0;
-        display: block;
-        float: none;
-        text-align: center;
-        width: 100%;
-    }
-
-    #navlist li.alignable,
-    #navlist li.pull-left,
-    #navlist li.pull-right {
-        display: inline-block;
-    }
-
-    #navlist li.pull-left {
-        float: none;
-    }
-
-    #navlist li.nav-list {
-        margin: 0;
-    }
-}
-
-.content a:hover {
-    text-decoration: underline;
+/* Lists */
+.content ul {
+    padding: 0 var(--spacing-xl);
 }
 
 .content ol {
     counter-reset: list;
+    padding: 0 30px;
+}
+
+.content ul > li,
+.content ol > li {
+    margin: var(--spacing-sm) 0;
 }
 
 .content ol > li {
-    list-style-position: none;
     position: relative;
     list-style: none;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.content ul > li {
-    margin: 5px 0 5px 0;
-}
-
-.content ul {
-    padding: 0 20px 0 20px;
-}
-
-.content ol {
-    padding: 0 30px 0 30px;
 }
 
 .content ol > li:before {
@@ -212,75 +255,261 @@ hr {
     left: -30px;
 }
 
+/* Blockquotes */
 .content blockquote {
-    border-left: 5px solid #333333;
-    margin: 20px 0 20px 0;
-    padding: 2px 8px 2px 8px;
+    border-left: 5px solid var(--blockquote-border);
+    margin: var(--spacing-xl) 0;
+    padding: 2px 8px;
     font-style: italic;
 }
 
-.content .profile-picture {
-    height: 120px;
-    width: 120px;
-
-    position: relative;
-    float: right;
-    border-radius: 50%;
-}
-
-p .content .profile-picture {
-    padding: 0;
-    margin: 0;
-}
-
-@media (max-width: 480px) {
-    .content .profile-picture img {
-        margin-top: -5px;
-    }
-}
-
 .content img {
-    text-align: center;
-    width: 100%;
+    max-width: 100%;
+    display: block;
+    margin: var(--spacing-lg) auto;
 }
+
+/* =====================================================================
+   7. Experience Section
+   ===================================================================== */
+
+.experience-item {
+    margin-bottom: var(--spacing-xl);
+}
+
+.experience-header {
+    margin-bottom: var(--spacing-sm);
+}
+
+.experience-company {
+    margin-bottom: var(--spacing-sm);
+}
+
+.experience-title {
+    font-weight: bold;
+    margin: var(--spacing-sm) 0;
+}
+
+.experience-details {
+    padding-left: var(--spacing-xl);
+}
+
+/* =====================================================================
+   8. Table Styles
+   ===================================================================== */
 
 table {
-    margin: 15px 0;
+    margin: var(--spacing-lg) 0;
     border-collapse: collapse;
     width: 100%;
-    padding: 0;
 }
 
 table tr {
-    background-color: white;
+    background-color: var(--table-bg);
+}
+
+table th,
+table td {
+    border: none;
+    text-align: left;
+    padding: 6px 13px;
     margin: 0;
-    padding: 0;
 }
 
-table tr:nth-child(2n) {
+/* =====================================================================
+   9. Skills Section
+   ===================================================================== */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
 }
 
-table tr th {
+.skill-category {
+    margin-bottom: var(--spacing-lg);
+}
+
+.skill-category h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.skill-category p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =====================================================================
+   10. Contact Section
+   ===================================================================== */
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: var(--spacing-xl);
+}
+
+.contact-info {
+    padding-right: var(--spacing-xl);
+}
+
+.contact-form-container h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: var(--spacing-sm);
     font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Inconsolata", monospace;
+    transition: border-color var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--link-color);
+}
+
+.submit-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--link-color);
+    color: white;
     border: none;
-    text-align: left;
-    margin: 0;
-    padding: 6px 13px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Inconsolata", monospace;
+    font-weight: bold;
+    transition: background-color var(--transition-speed);
+    margin-top: var(--spacing-md);
+    align-self: flex-start;
 }
 
-table tr td {
-    border: none;
-    text-align: left;
-    margin: 0;
-    padding: 6px 13px;
+.submit-btn:hover {
+    background-color: var(--text-color);
 }
 
-table tr th :first-child,
-table tr td :first-child {
-    margin: 0;
+/* =====================================================================
+   11. Media Queries
+   ===================================================================== */
+
+/* Large screens (800px and below) */
+@media (max-width: 800px) {
+    .container {
+        max-width: 600px;
+        transition: var(--transition-speed) all;
+    }
+
+    .nav-container {
+        justify-content: flex-end;
+    }
+
+    .navbar-ul {
+        flex-wrap: wrap;
+    }
 }
 
-table tr th :last-child,
-table tr td :last-child {
-    margin: 0;
+/* Medium screens (650px and below) */
+@media (max-width: 650px) {
+    .container {
+        max-width: 83%;
+    }
+
+    .navbar {
+        padding-bottom: var(--spacing-md);
+    }
+
+    .navbar-ul {
+        padding-inline: 40px; /* Space for theme toggle */
+    }
+
+    .theme-toggle-bulb {
+        width: 28px;
+        height: 28px;
+        position: absolute;
+        right: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 0;
+    }
+
+    .theme-toggle-bulb:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .bulb-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .skills-grid,
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info {
+        padding-right: 0;
+    }
+}
+
+/* Small screens (500px and below) */
+@media (max-width: 500px) {
+    .navbar {
+        text-align: center;
+        padding: var(--spacing-md) 0;
+        position: fixed; /* Keep navbar fixed at top */
+    }
+
+    .navbar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #author-name {
+        width: 100%;
+        float: none;
+    }
+
+    .theme-toggle-bulb {
+        right: 0;
+    }
+
+    .nav-container {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #navlist {
+        padding: var(--spacing-md) 0;
+        margin: 0;
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
 }
