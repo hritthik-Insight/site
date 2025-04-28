@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const resumeButton = document.getElementById("resumeButton");
 
     // Resume PDF generation functionality - COMMENTED OUT
-    /*
+
     resumeButton.addEventListener("click", function () {
         console.log("Resume button clicked!");
         // Show loading indicator (optional)
@@ -60,8 +60,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const element = document.body; // Or a specific element containing the resume
 
+        const options = {
+            margin: 10,
+            filename: "resume.pdf",
+            image: { type: "jpeg", quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        };
+
         window
-            .html2pdf(element)
+            .html2pdf(element, options)
             .then(function (pdf) {
                 // Hide loading indicator (optional)
                 // document.getElementById('loading').style.display = 'none';
@@ -78,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
             });
     });
-    */
 
     const navbar = document.querySelector(".navbar");
     const offset = navbar.offsetHeight; // You can adjust this value as needed
