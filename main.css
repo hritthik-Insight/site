@@ -1,0 +1,515 @@
+/**
+ * main.css - Personal website styles
+ * Author: Hritthik Bose
+ */
+
+/* =====================================================================
+   1. CSS Variables
+   ===================================================================== */
+
+:root {
+    --bg-color: #f1f1f1;
+    --text-color: #272727;
+    --link-color: #ff0f00;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --border-bottom-color: rgba(255, 255, 255, 0.3);
+    --navbar-bg: #f1f1f1cc;
+    --table-bg: white;
+    --blockquote-border: #333333;
+    --transition-speed: 0.3s ease;
+    --spacing-sm: 5px;
+    --spacing-md: 10px;
+    --spacing-lg: 15px;
+    --spacing-xl: 20px;
+}
+
+[data-theme="dark"] {
+    --bg-color: #161616;
+    --text-color: #e0e0e0;
+    --link-color: #ff6b6b;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --border-bottom-color: rgba(0, 0, 0, 0.3);
+    --navbar-bg: #1616164d;
+    --table-bg: #1e1e1e;
+    --blockquote-border: #666666;
+}
+
+/* =====================================================================
+   2. Base Styles
+   ===================================================================== */
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Inconsolata", monospace;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed),
+        color var(--transition-speed);
+}
+
+a {
+    text-decoration: none;
+    color: var(--link-color);
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-bottom-color);
+    margin: var(--spacing-xl) 0;
+}
+
+h2 {
+    margin-block-start: var(--spacing-lg);
+    margin-block-end: var(--spacing-md);
+    color: var(--text-color);
+}
+
+h3,
+h4 {
+    color: var(--text-color);
+}
+
+/* =====================================================================
+   3. Layout Components
+   ===================================================================== */
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.wrapper {
+    min-height: 100%;
+}
+
+.content {
+    padding: 0;
+}
+
+/* =====================================================================
+   4. Navigation & Header
+   ===================================================================== */
+
+.navbar {
+    padding: var(--spacing-lg) 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--navbar-bg);
+    transition: background-color var(--transition-speed);
+    backdrop-filter: blur(5px);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-top: 0;
+}
+
+#author-name {
+    font-size: 30px;
+    color: var(--text-color);
+    display: inline-block;
+}
+
+.navbar-ul {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: var(--spacing-sm) 0;
+    padding-right: 50px; /* Make space for theme toggle button */
+    list-style-type: none;
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+}
+
+.nav-list {
+    list-style-type: none;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+}
+
+/* Style for the slash separator with margins for spacing */
+.nav-separator {
+    color: var(--text-color);
+    opacity: 0.6;
+    margin: 0 var(--spacing-sm);
+    font-weight: 300;
+    display: inline-block;
+}
+
+/* Ensure consistent styling for nav links */
+.nav-list a {
+    padding: 5px 0;
+    transition: color 0.2s ease;
+}
+
+/* Add subtle hover effect */
+.nav-list a:hover {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+/* =====================================================================
+   5. Theme Toggle Component
+   ===================================================================== */
+
+.theme-toggle-bulb {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--bg-color);
+    /* box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2); */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2000;
+    transition: transform var(--transition-speed),
+        box-shadow var(--transition-speed);
+
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.theme-toggle-bulb:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.bulb-icon {
+    color: var(--link-color);
+    width: 20px;
+    height: 20px;
+}
+
+.light-icon,
+.dark-icon {
+    display: block;
+}
+
+/* =====================================================================
+   6. Content Styles
+   ===================================================================== */
+
+.about-content {
+    display: inline-flex;
+    position: relative;
+}
+
+.about-text {
+    margin: 0;
+    line-height: 1.6;
+    text-wrap: auto;
+}
+
+/* Lists */
+.content ul {
+    padding: 0 var(--spacing-xl);
+}
+
+.content ol {
+    counter-reset: list;
+    padding: 0 30px;
+}
+
+.content ul > li,
+.content ol > li {
+    margin: var(--spacing-sm) 0;
+}
+
+.content ol > li {
+    position: relative;
+    list-style: none;
+}
+
+.content ol > li:before {
+    content: "[" counter(list, decimal) "] ";
+    counter-increment: list;
+    position: absolute;
+    left: -30px;
+}
+
+/* Blockquotes */
+.content blockquote {
+    border-left: 5px solid var(--blockquote-border);
+    margin: var(--spacing-xl) 0;
+    padding: 2px 8px;
+    font-style: italic;
+}
+
+.content img {
+    max-width: 100%;
+    display: block;
+    margin: var(--spacing-lg) auto;
+}
+
+/* =====================================================================
+   7. Experience Section
+   ===================================================================== */
+
+.experience-item {
+    margin-bottom: var(--spacing-xl);
+}
+
+.experience-header {
+    margin-bottom: var(--spacing-sm);
+}
+
+.experience-company {
+    margin-bottom: var(--spacing-sm);
+}
+
+.experience-title {
+    font-weight: bold;
+    margin: var(--spacing-sm) 0;
+}
+
+.experience-details {
+    padding-left: var(--spacing-xl);
+}
+
+/* =====================================================================
+   8. Table Styles
+   ===================================================================== */
+
+table {
+    margin: var(--spacing-lg) 0;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table tr {
+    background-color: var(--table-bg);
+}
+
+table th,
+table td {
+    border: none;
+    text-align: left;
+    padding: 6px 13px;
+    margin: 0;
+}
+
+/* =====================================================================
+   9. Skills Section
+   ===================================================================== */
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.skill-category {
+    margin-bottom: var(--spacing-lg);
+}
+
+.skill-category h3 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.1em;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.skill-category p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* =====================================================================
+   10. Contact Section
+   ===================================================================== */
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: var(--spacing-xl);
+}
+
+.contact-info {
+    padding-right: var(--spacing-xl);
+}
+
+.contact-form-container h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-xl);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: var(--spacing-sm);
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: "Inconsolata", monospace;
+    transition: border-color var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--link-color);
+}
+
+.submit-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--link-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "Inconsolata", monospace;
+    font-weight: bold;
+    transition: background-color var(--transition-speed);
+    margin-top: var(--spacing-md);
+    align-self: flex-start;
+}
+
+.submit-btn:hover {
+    background-color: var(--text-color);
+}
+
+/* =====================================================================
+   11. Media Queries
+   ===================================================================== */
+
+/* Large screens (800px and below) */
+@media (max-width: 800px) {
+    .container {
+        max-width: 600px;
+        transition: var(--transition-speed) all;
+    }
+
+    .nav-container {
+        justify-content: flex-end;
+    }
+
+    .navbar-ul {
+        flex-wrap: wrap;
+    }
+}
+
+/* Medium screens (650px and below) */
+@media (max-width: 650px) {
+    .container {
+        max-width: 83%;
+    }
+
+    .navbar {
+        padding-bottom: var(--spacing-md);
+    }
+
+    .navbar-ul {
+        padding-inline: 40px; /* Space for theme toggle */
+    }
+
+    .theme-toggle-bulb {
+        width: 28px;
+        height: 28px;
+        position: absolute;
+        right: var(--spacing-md);
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 0;
+    }
+
+    .theme-toggle-bulb:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .bulb-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .skills-grid,
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-info {
+        padding-right: 0;
+    }
+}
+
+/* Small screens (500px and below) */
+@media (max-width: 500px) {
+    .navbar {
+        text-align: center;
+        padding: var(--spacing-md) 0;
+        position: fixed; /* Keep navbar fixed at top */
+    }
+
+    .navbar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #author-name {
+        width: 100%;
+        float: none;
+    }
+
+    .theme-toggle-bulb {
+        right: 0;
+    }
+
+    .nav-container {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #navlist {
+        padding: var(--spacing-md) 0;
+        margin: 0;
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+}
