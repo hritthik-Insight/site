@@ -54,45 +54,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation functionality - COMMENTED OUT
 
     resumeButton.addEventListener("click", function () {
-        console.log("Resume button clicked!");
-        // Show loading indicator (optional)
-        // document.getElementById('loading').style.display = 'block';
+        // Create a download link
+        const link = document.createElement('a');
+        link.href = 'hb-resume-0525.pdf';
+        link.download = 'hb-resume-0525.pdf';
 
-        const element = document.body; // Or a specific element containing the resume
+        // Append to document
+        document.body.appendChild(link);
 
-        const options = {
-            margin: 10,
-            filename: "resume.pdf",
-            image: { type: "jpeg", quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        };
+        // Trigger the download
+        link.click();
 
-        // Add this function at the start of your file, before the DOMContentLoaded event
-        function generateRandomFileName() {
-            const prefix = "resume";
-            const timestamp = new Date().getTime();
-            const random = Math.floor(Math.random() * 1000);
-            return `${prefix}_${timestamp}_${random}.pdf`;
-        }
-
-        // Replace the existing PDF generation code in the click event listener
-        window
-            .html2pdf(element, options)
-            .then(function (pdf) {
-                // Hide loading indicator (optional)
-                // document.getElementById('loading').style.display = 'none';
-                const randomFileName = generateRandomFileName();
-                pdf.save(randomFileName);
-            })
-            .catch(function (error) {
-                // Hide loading indicator (optional)
-                // document.getElementById('loading').style.display = 'none';
-                console.error("Error generating PDF:", error);
-                alert(
-                    "Error generating PDF. Please check the console for details."
-                );
-            });
+        // Remove the link
+        document.body.removeChild(link);
     });
 
     const navbar = document.querySelector(".navbar");
