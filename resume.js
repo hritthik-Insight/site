@@ -68,18 +68,26 @@ document.addEventListener("DOMContentLoaded", function () {
             jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
         };
 
+        // Add this function at the start of your file, before the DOMContentLoaded event
+        function generateRandomFileName() {
+            const prefix = "resume";
+            const timestamp = new Date().getTime();
+            const random = Math.floor(Math.random() * 1000);
+            return `${prefix}_${timestamp}_${random}.pdf`;
+        }
+
+        // Replace the existing PDF generation code in the click event listener
         window
             .html2pdf(element, options)
             .then(function (pdf) {
                 // Hide loading indicator (optional)
                 // document.getElementById('loading').style.display = 'none';
-
-                pdf.save("resume.pdf");
+                const randomFileName = generateRandomFileName();
+                pdf.save(randomFileName);
             })
             .catch(function (error) {
                 // Hide loading indicator (optional)
                 // document.getElementById('loading').style.display = 'none';
-
                 console.error("Error generating PDF:", error);
                 alert(
                     "Error generating PDF. Please check the console for details."
