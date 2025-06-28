@@ -51,14 +51,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - COMMENTED OUT
+    // Resume PDF generation functionality - download pdf.
 
     resumeButton.addEventListener("click", function () {
         // Create a download link
-        const link = document.createElement('a');
-        link.href = 'hb-resume-0525.pdf';
-        link.download = 'hb-resume-0525.pdf';
-
+        const link = document.createElement("a");
+        link.href = "HritthikBose-resume-0625.pdf"; // Path to your PDF file
+        link.target = "_blank"; // Open in a new tab
+        link.download = "HritthikBose-resume-0625.pdf"; // Specify the file name
         // Append to document
         document.body.appendChild(link);
 
