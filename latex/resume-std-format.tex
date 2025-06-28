@@ -1,0 +1,266 @@
+\documentclass[10pt, letterpaper]{article}
+
+% ========================================
+% PERSONAL INFORMATION VARIABLES
+% ========================================
+\newcommand{\fullName}{Hritthik Bose}
+\newcommand{\personalWebsite}{https://www.hritthik.com}
+\newcommand{\personalEmail}{contact@hritthik.com}
+\newcommand{\personalPhone}{8003031332}
+\newcommand{\personalLocation}{Silvassa}
+\newcommand{\linkedinProfile}{linkedin.com/in/hritthikb/}
+\newcommand{\linkedinURL}{https://linkedin.com/in/hritthikb/}
+
+% ========================================
+% PACKAGES
+% ========================================
+\usepackage[
+    ignoreheadfoot,
+    top=2 cm, bottom=2 cm, left=2 cm, right=2 cm,
+    footskip=1.0 cm
+]{geometry}
+\usepackage{titlesec}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage[dvipsnames]{xcolor}
+\definecolor{primaryColor}{RGB}{0, 0, 0}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{amsmath}
+\usepackage[
+    pdftitle={\fullName's CV},
+    pdfauthor={\fullName},
+    pdfcreator={Hritthik},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref}
+\usepackage[pscoord]{eso-pic}
+\usepackage{calc}
+\usepackage{bookmark}
+\usepackage{lastpage}
+\usepackage{changepage}
+\usepackage{paracol}
+\usepackage{ifthen}
+\usepackage{needspace}
+\usepackage{iftex}
+
+% ========================================
+% FONT SETUP
+% ========================================
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+\usepackage{charter}
+
+% ========================================
+% DOCUMENT SETTINGS
+% ========================================
+\raggedright
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt}
+\pagestyle{empty}
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\topskip}{0pt}
+\setlength{\columnsep}{0.15cm}
+\pagenumbering{gobble}
+
+% ========================================
+% SECTION FORMATTING
+% ========================================
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+\titlespacing{\section}{-1pt}{0.3 cm}{0.2 cm}
+
+% ========================================
+% CUSTOM ENVIRONMENTS
+% ========================================
+\renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$}
+
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm, parsep=0.10 cm, partopsep=0pt, itemsep=0pt,
+        leftmargin=0 cm + 10pt
+    ]
+}{
+    \end{itemize}
+}
+
+\newenvironment{techline}{
+    \begin{adjustwidth}{0pt}{0pt}
+    \vspace{0.05cm}
+}{
+    \vspace{0.05cm}
+    \end{adjustwidth}
+}
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{0 cm + 0.00001 cm}{0 cm + 0.00001 cm}
+}{
+    \end{adjustwidth}
+}
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+}
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+}
+
+% ========================================
+% CUSTOM COMMANDS
+% ========================================
+\newcommand{\AND}{\unskip
+    \cleaders\copy\ANDbox\hskip\wd\ANDbox
+    \ignorespaces
+}
+\newsavebox\ANDbox
+\sbox\ANDbox{$|$}
+
+\let\hrefWithoutArrow\href
+
+% ========================================
+% DOCUMENT CONTENT
+% ========================================
+\begin{document}
+
+% Header
+\begin{header}
+    \fontsize{25 pt}{25 pt}\selectfont \href{\personalWebsite}{\fullName}
+    \vspace{5 pt}
+
+    \normalsize
+    \mbox{\personalLocation}%
+    \kern 5.0 pt \AND \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{mailto:\personalEmail}{\personalEmail}}%
+    \kern 5.0 pt \AND \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{tel:+91\personalPhone}{\personalPhone}}%
+    \kern 5.0 pt \AND \kern 5.0 pt%
+    \mbox{\hrefWithoutArrow{\linkedinURL}{\linkedinProfile}}%
+\end{header}
+
+\vspace{5 pt - 0.3 cm}
+
+% About Me
+\section{About Me}
+\begin{onecolentry}
+    Cloud Engineer at Insight Enterprises with 3+ years of experience specializing in application development and internal GenAI product solutions. Full-stack developer with expertise in C\#, .NET 8, Blazor, Microsoft Fluent UI, and advanced CSS customization.
+\end{onecolentry}
+
+% Skills
+\section{Skills}
+\begin{onecolentry}
+    \textbf{Programming Languages:} C\#, Python, JavaScript, C++
+\end{onecolentry}
+
+\begin{onecolentry}
+    \textbf{Frameworks \& Libraries:} Blazor Server, .NET, React.js, Next.js, TailwindCSS, FluentUI
+\end{onecolentry}
+
+\begin{onecolentry}
+    \textbf{Cloud Platforms:} Microsoft Azure, AWS, GCP
+\end{onecolentry}
+
+\begin{onecolentry}
+    \textbf{Databases:} SQL, CosmosDB
+\end{onecolentry}
+
+\begin{onecolentry}
+    \textbf{AI \& ML:} Semantic Kernel, Azure OpenAI, RAG Implementation
+\end{onecolentry}
+
+\begin{onecolentry}
+    \textbf{Tools \& Methodologies:} Git, Agile - Jira, CI/CD - Github Actions
+\end{onecolentry}
+
+% Experience
+\section{Experience}
+
+\begin{twocolentry}{Apr 2023 – Present}
+    \textbf{Insight Enterprises} -- Cloud Engineer, Gen AI Developer
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Addressed complexities of information retrieval from extensive SharePoint repositories, developing efficient data ingestion pipelines for fetching, chunking, and indexing data into Azure Search
+        \item Spearheaded the implementation of a RAG-based enterprise application, leveraging Semantic Kernel, C\# .NET 8 Blazor, and Microsoft Fluent UI to create a robust and scalable solution
+        \item Orchestrated multi-LLM support and designed an intuitive chatbot interface, streamlining user experience and enhancing data accessibility
+        \item Optimized application performance by tackling technical challenges, resolving performance bottlenecks, and making key architectural decisions
+    \end{highlights}
+    
+    \begin{techline}
+        Technologies: \textit{C\# .NET 8 Blazor, Microsoft Fluent UI, Semantic Kernel, Azure OpenAI Studio, Azure Search}
+    \end{techline}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{Jul 2022 – Mar 2023}
+    \textbf{Hanu Softwares (acquired by Insight)} -- Product Development, Hybrid Cloud
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Contributed to product development and hybrid cloud deployments
+    \end{highlights}
+    \begin{techline}
+        Technologies: \textit{Node.js, React, Azure, AWS, Azure SQL Elastic Pool}
+    \end{techline}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{Aug 2021 – Oct 2021}
+    \textbf{High Radius} -- Tech Consulting Intern
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Delivered product to client, EIPP product Functional Consulting role
+        \item Gathered requirements, took feedback, configured products, made action plans, and ensured shipping pipeline
+    \end{highlights}
+    \begin{techline}
+        Technologies: \textit{Jira, Agile, Git, Putty}
+    \end{techline}
+\end{onecolentry}
+
+\vspace{0.2 cm}
+
+\begin{twocolentry}{Jan 2021 – Mar 2021}
+    \textbf{High Radius} -- Full Stack Dev Intern
+\end{twocolentry}
+\begin{onecolentry}
+    \begin{highlights}
+        \item Worked on EIPP development team
+        \item Built RandomForest model to predict customer payment behavior
+        \item Worked on the front end using React.js and backend using Java J2EE
+    \end{highlights}
+    \begin{techline}
+        Technologies: \textit{React, Java, Postman, Git, Putty, SQL, Python, Pandas, NumPy, Scikit-learn}
+    \end{techline}
+\end{onecolentry}
+
+% Certifications
+\section{Certifications}
+\begin{onecolentry}
+    \textbf{Azure:} \href{https://learn.microsoft.com/api/credentials/share/en-us/Hritthikb/7FD3A0745F0FDBA9?sharingId=F7DBE96854C9D653}{AZ-204}, \href{https://learn.microsoft.com/api/credentials/share/en-us/Hritthikb/C672042C9602BACA?sharingId=F7DBE96854C9D653}{AZ-900}, \href{https://learn.microsoft.com/api/credentials/share/en-us/Hritthikb/ADE7CF32DC0229C3?sharingId=F7DBE96854C9D653}{DP-900}, \href{https://learn.microsoft.com/api/credentials/share/en-us/Hritthikb/29C57AE56C8740F9?sharingId=F7DBE96854C9D653}{AI-900} | 
+    \textbf{AWS: }\href{https://drive.google.com/file/d/19zyEZdZxfMfxBnFuyHEbPhX_mwNOj6UJ/view}{CLF-C02}, 
+    \textbf{GCP: }\href{https://www.credly.com/badges/861ee3af-84e2-4c7c-89cc-2fa0cd059729/public_url}{ACE} | \textbf{GitHub: } \href{https://www.credly.com/go/9i9Jv75B}{Foundations}
+\end{onecolentry}
+
+% Education
+\section{Education}
+\begin{twocolentry}{2018-22}
+    \textbf{KIIT University} -- B. Tech in Information Technology, 8.75gpa
+\end{twocolentry}
+
+\end{document}

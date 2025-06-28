@@ -51,34 +51,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - COMMENTED OUT
-    /*
+    // Resume PDF generation functionality - download pdf.
+
     resumeButton.addEventListener("click", function () {
-        console.log("Resume button clicked!");
-        // Show loading indicator (optional)
-        // document.getElementById('loading').style.display = 'block';
+        // Create a download link
+        const link = document.createElement("a");
+        link.href = this.dataset.resumeFile; // Get from data attribute
+        link.target = "_blank"; // Open in a new tab
+        link.download = this.dataset.downloadName; // Get from data attribute
+        // Append to document
+        document.body.appendChild(link);
 
-        const element = document.body; // Or a specific element containing the resume
+        // Trigger the download
+        link.click();
 
-        window
-            .html2pdf(element)
-            .then(function (pdf) {
-                // Hide loading indicator (optional)
-                // document.getElementById('loading').style.display = 'none';
-
-                pdf.save("resume.pdf");
-            })
-            .catch(function (error) {
-                // Hide loading indicator (optional)
-                // document.getElementById('loading').style.display = 'none';
-
-                console.error("Error generating PDF:", error);
-                alert(
-                    "Error generating PDF. Please check the console for details."
-                );
-            });
+        // Remove the link
+        document.body.removeChild(link);
     });
-    */
 
     const navbar = document.querySelector(".navbar");
     const offset = navbar.offsetHeight; // You can adjust this value as needed
