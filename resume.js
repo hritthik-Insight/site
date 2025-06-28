@@ -1,3 +1,9 @@
+// Configuration constants at the top
+const CONFIG = {
+    RESUME_FILENAME: "HritthikBose-resume-0625.pdf",
+    RESUME_DISPLAY_NAME: "Hritthik Bose - Resume.pdf",
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     // Theme toggle functionality
     const themeBulb = document.getElementById("theme-toggle-bulb");
@@ -52,21 +58,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const resumeButton = document.getElementById("resumeButton");
 
     // Resume PDF generation functionality - download pdf.
+    resumeButton.addEventListener("click", async function () {
+        try {
+            // Fetch the PDF as a blob to ensure proper handling
+            const response = await fetch(CONFIG.RESUME_FILENAME);
 
-    resumeButton.addEventListener("click", function () {
-        // Create a download link
-        const link = document.createElement("a");
-        link.href = this.dataset.resumeFile; // Get from data attribute
-        link.target = "_blank"; // Open in a new tab
-        link.download = this.dataset.downloadName; // Get from data attribute
-        // Append to document
-        document.body.appendChild(link);
+            if (!response.ok) {
+                throw new Error("PDF file not found");
+            }
 
-        // Trigger the download
-        link.click();
+            const blob = await response.blob();
 
-        // Remove the link
-        document.body.removeChild(link);
+            // Create blob URL
+            const blobUrl = window.URL.createObjectURL(blob);
+
+            // Create download link
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = CONFIG.RESUME_DISPLAY_NAME;
+
+            // Trigger download
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            // Clean up blob URL
+            window.URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error("Download failed:", error);
+            // Fallback to direct link
+            window.open(CONFIG.RESUME_FILENAME, "_blank");
+        }
     });
 
     const navbar = document.querySelector(".navbar");
