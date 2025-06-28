@@ -1,5 +1,5 @@
 const CONFIG = {
-    RESUME_FILENAME: "HritthikBose-resume.pdf", // Remove ./ for better compatibility
+    RESUME_FILENAME: "HritthikBose-resume-0625.pdf", // Remove ./ for better compatibility
     RESUME_DISPLAY_NAME: "Hritthik Bose - Resume.pdf",
 };
 
@@ -56,33 +56,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - simple device-aware approach
+    // Resume PDF generation functionality - simplified and reliable
     resumeButton.addEventListener("click", function () {
-        const isMobile =
-            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-                navigator.userAgent
-            );
-
+        // Simple approach that works across all devices
         const link = document.createElement("a");
-        link.href = CONFIG.RESUME_FILENAME;
-        link.style.display = "none";
 
-        if (isMobile) {
-            // Mobile: Force download with proper attributes
-            link.download = CONFIG.RESUME_DISPLAY_NAME;
-            link.setAttribute("type", "application/pdf");
-        } else {
-            // Desktop: Open in new tab with download option
-            link.target = "_blank";
-            link.download = CONFIG.RESUME_DISPLAY_NAME;
-        }
+        // For static sites, use relative path
+        link.href = `./${CONFIG.RESUME_FILENAME}`;
+        link.download = CONFIG.RESUME_DISPLAY_NAME;
+        link.target = "_blank";
 
+        // Trigger download
         document.body.appendChild(link);
         link.click();
-
-        setTimeout(() => {
-            document.body.removeChild(link);
-        }, 100);
+        document.body.removeChild(link);
     });
 
     const navbar = document.querySelector(".navbar");
