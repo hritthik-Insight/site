@@ -1,5 +1,5 @@
 const CONFIG = {
-    RESUME_FILENAME: "./HritthikBose-resume.pdf",
+    RESUME_FILENAME: "HritthikBose-resume.pdf", // Remove ./ for better compatibility
     RESUME_DISPLAY_NAME: "Hritthik Bose - Resume.pdf",
 };
 
@@ -56,18 +56,81 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - download pdf.
-    resumeButton.addEventListener("click", function () {
-        // Simple direct download - works best for static sites
-        const link = document.createElement("a");
-        link.href = CONFIG.RESUME_FILENAME;
-        link.download = CONFIG.RESUME_DISPLAY_NAME;
-        link.target = "_blank";
+    // Resume PDF generation functionality - improved for mobile/tablet compatibility
+    resumeButton.addEventListener("click", async function () {
+        // Detect device type for optimal download strategy
+        const isMobile =
+            /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                navigator.userAgent
+            );
 
-        // Trigger download
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        try {
+            if (isMobile) {
+                // Mobile-optimized approach: Use fetch with blob for better compatibility
+                const response = await fetch(CONFIG.RESUME_FILENAME, {
+                    method: "GET",
+                    headers: {
+                        Accept: "application/pdf",
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error("PDF not found");
+                }
+
+                // Get the PDF as a blob
+                const blob = await response.blob();
+
+                // Create object URL
+                const url = window.URL.createObjectURL(
+                    new Blob([blob], { type: "application/pdf" })
+                );
+
+                // Create download link
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = CONFIG.RESUME_DISPLAY_NAME;
+                link.style.display = "none";
+
+                // Trigger download
+                document.body.appendChild(link);
+                link.click();
+
+                // Cleanup
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            } else {
+                // Desktop/PC approach: Direct download
+                const link = document.createElement("a");
+                link.href = CONFIG.RESUME_FILENAME;
+                link.download = CONFIG.RESUME_DISPLAY_NAME;
+                link.target = "_blank";
+                link.style.display = "none";
+
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        } catch (error) {
+            console.error("Download failed:", error);
+
+            // Fallback: Open in new tab (works on all devices)
+            const fallbackLink = document.createElement("a");
+            fallbackLink.href = CONFIG.RESUME_FILENAME;
+            fallbackLink.target = "_blank";
+            fallbackLink.rel = "noopener noreferrer";
+
+            document.body.appendChild(fallbackLink);
+            fallbackLink.click();
+            document.body.removeChild(fallbackLink);
+
+            // Optional: Show user message
+            console.log(
+                "PDF opened in new tab - you can download it from there"
+            );
+        }
     });
 
     const navbar = document.querySelector(".navbar");
