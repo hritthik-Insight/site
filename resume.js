@@ -1,3 +1,8 @@
+const CONFIG = {
+    RESUME_FILENAME: "HritthikBose-resume-0625.pdf", // Remove ./ for better compatibility
+    RESUME_DISPLAY_NAME: "Hritthik Bose - Resume.pdf",
+};
+
 document.addEventListener("DOMContentLoaded", function () {
     // Theme toggle functionality
     const themeBulb = document.getElementById("theme-toggle-bulb");
@@ -51,21 +56,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - download pdf.
-
+    // Resume PDF generation functionality - simplified and reliable
     resumeButton.addEventListener("click", function () {
-        // Create a download link
+        // Simple approach that works across all devices
         const link = document.createElement("a");
-        link.href = this.dataset.resumeFile; // Get from data attribute
-        link.target = "_blank"; // Open in a new tab
-        link.download = this.dataset.downloadName; // Get from data attribute
-        // Append to document
+
+        // For static sites, use relative path
+        link.href = `./${CONFIG.RESUME_FILENAME}`;
+        link.download = CONFIG.RESUME_DISPLAY_NAME;
+        link.target = "_blank";
+
+        // Trigger download
         document.body.appendChild(link);
-
-        // Trigger the download
         link.click();
-
-        // Remove the link
         document.body.removeChild(link);
     });
 
