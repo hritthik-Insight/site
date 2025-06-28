@@ -56,9 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
     resumeButton.addEventListener("click", function () {
         // Create a download link
         const link = document.createElement("a");
-        link.href = "HritthikBose-resume-0625.pdf"; // Path to your PDF file
+        link.href = this.dataset.resumeFile; // Get from data attribute
         link.target = "_blank"; // Open in a new tab
-        link.download = "HritthikBose-resume-0625.pdf"; // Specify the file name
+        link.download = this.dataset.downloadName; // Get from data attribute
         // Append to document
         document.body.appendChild(link);
 
