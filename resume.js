@@ -56,81 +56,33 @@ document.addEventListener("DOMContentLoaded", function () {
     // Resume PDF generation
     const resumeButton = document.getElementById("resumeButton");
 
-    // Resume PDF generation functionality - improved for mobile/tablet compatibility
-    resumeButton.addEventListener("click", async function () {
-        // Detect device type for optimal download strategy
+    // Resume PDF generation functionality - simple device-aware approach
+    resumeButton.addEventListener("click", function () {
         const isMobile =
             /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
                 navigator.userAgent
             );
 
-        try {
-            if (isMobile) {
-                // Mobile-optimized approach: Use fetch with blob for better compatibility
-                const response = await fetch(CONFIG.RESUME_FILENAME, {
-                    method: "GET",
-                    headers: {
-                        Accept: "application/pdf",
-                    },
-                });
+        const link = document.createElement("a");
+        link.href = CONFIG.RESUME_FILENAME;
+        link.style.display = "none";
 
-                if (!response.ok) {
-                    throw new Error("PDF not found");
-                }
-
-                // Get the PDF as a blob
-                const blob = await response.blob();
-
-                // Create object URL
-                const url = window.URL.createObjectURL(
-                    new Blob([blob], { type: "application/pdf" })
-                );
-
-                // Create download link
-                const link = document.createElement("a");
-                link.href = url;
-                link.download = CONFIG.RESUME_DISPLAY_NAME;
-                link.style.display = "none";
-
-                // Trigger download
-                document.body.appendChild(link);
-                link.click();
-
-                // Cleanup
-                setTimeout(() => {
-                    document.body.removeChild(link);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            } else {
-                // Desktop/PC approach: Direct download
-                const link = document.createElement("a");
-                link.href = CONFIG.RESUME_FILENAME;
-                link.download = CONFIG.RESUME_DISPLAY_NAME;
-                link.target = "_blank";
-                link.style.display = "none";
-
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
-        } catch (error) {
-            console.error("Download failed:", error);
-
-            // Fallback: Open in new tab (works on all devices)
-            const fallbackLink = document.createElement("a");
-            fallbackLink.href = CONFIG.RESUME_FILENAME;
-            fallbackLink.target = "_blank";
-            fallbackLink.rel = "noopener noreferrer";
-
-            document.body.appendChild(fallbackLink);
-            fallbackLink.click();
-            document.body.removeChild(fallbackLink);
-
-            // Optional: Show user message
-            console.log(
-                "PDF opened in new tab - you can download it from there"
-            );
+        if (isMobile) {
+            // Mobile: Force download with proper attributes
+            link.download = CONFIG.RESUME_DISPLAY_NAME;
+            link.setAttribute("type", "application/pdf");
+        } else {
+            // Desktop: Open in new tab with download option
+            link.target = "_blank";
+            link.download = CONFIG.RESUME_DISPLAY_NAME;
         }
+
+        document.body.appendChild(link);
+        link.click();
+
+        setTimeout(() => {
+            document.body.removeChild(link);
+        }, 100);
     });
 
     const navbar = document.querySelector(".navbar");
